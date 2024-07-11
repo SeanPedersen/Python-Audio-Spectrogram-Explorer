@@ -37,7 +37,10 @@ pase.pase.start()
 ```
 
 ### Development (Dependencies)
-Install via pixi: ```pixi install```
+Install via pixi: ```$ pixi install```
+Enter pixi env: ```$ pixi shell```
+
+Start: ```$ python pase/pase.py```
 
 ## How to use it:
 
