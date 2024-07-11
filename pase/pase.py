@@ -53,8 +53,6 @@ from skimage.feature import match_template
 from moviepy.editor import VideoClip, AudioFileClip
 from moviepy.video.io.bindings import mplfig_to_npimage
 
-#%%    
-    
 
 class MplCanvas(FigureCanvasQTAgg ):
 
@@ -75,7 +73,7 @@ class gui(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(gui, self).__init__(*args, **kwargs)
 
-        self.canvas =  MplCanvas(self, dpi=150)
+        self.canvas =  MplCanvas(self, dpi=100)
                 
         # self.call_time=pd.Series()
         # self.call_frec=pd.Series()
@@ -195,11 +193,12 @@ class gui(QtWidgets.QMainWindow):
         
         button_save_video.clicked.connect(self.func_save_video)        
           
-############# menue
+############# menu
         menuBar = self.menuBar()
 
         # Creating menus using a title
-        openMenu = menuBar.addAction("Open files")
+        openMetaMenu = menuBar.addMenu("Files")
+        openMenu = openMetaMenu.addAction("Open files")
         openMenu.triggered.connect(self.openfilefunc)
 
         
@@ -217,11 +216,12 @@ class gui(QtWidgets.QMainWindow):
         e6 =exportMenu.addAction("Automatic detections as .csv table")
         e6.triggered.connect(self.export_automatic_detector)            
         
-        drawMenu = menuBar.addAction("Draw")
+        openMetaDraw = menuBar.addMenu("Draw")
+        drawMenu = openMetaDraw.addAction("Draw")
         drawMenu.triggered.connect(self.func_draw_shape)            
         
-        
-        autoMenu = menuBar.addMenu("Automatic detection")
+        openMetaDet = menuBar.addMenu("Automatic detection")
+        autoMenu = openMetaDet.addMenu("Automatic detection")
         a1 =autoMenu.addAction("Shapematching on current file")
         a1.triggered.connect(self.automatic_detector_shapematching)
         a3 =autoMenu.addAction("Shapematching on all files")
@@ -328,6 +328,7 @@ class gui(QtWidgets.QMainWindow):
         tnav = NavigationToolbar( self.canvas, self)
         
         toolbar = QtWidgets.QToolBar()
+        toolbar2 = QtWidgets.QHBoxLayout()   
     
         button_plot_prevspectro=QtWidgets.QPushButton('<--Previous spectrogram')
         button_plot_prevspectro.clicked.connect(self.plot_previous_spectro)            
@@ -352,24 +353,24 @@ class gui(QtWidgets.QMainWindow):
         toolbar.addWidget(QtWidgets.QLabel(ss))     
 
         toolbar.addSeparator()
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
      
 
-        toolbar.addWidget(QtWidgets.QLabel('fft_size[bits]:'))
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
-        toolbar.addWidget(self.fft_size) 
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
-        toolbar.addWidget(QtWidgets.QLabel('fft_overlap[0-1]:'))
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
-        toolbar.addWidget(self.fft_overlap) 
+        toolbar2.addWidget(QtWidgets.QLabel('fft_size[bits]:'))
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(self.fft_size) 
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(QtWidgets.QLabel('fft_overlap[0-1]:'))
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(self.fft_overlap) 
         
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
 
         
-        toolbar.addWidget(QtWidgets.QLabel('Colormap:'))
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
-        toolbar.addWidget( self.colormap_plot)  
-        toolbar.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget(QtWidgets.QLabel('Colormap:'))
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
+        toolbar2.addWidget( self.colormap_plot)  
+        toolbar2.addWidget(QtWidgets.QLabel(ss))     
         
         toolbar.addSeparator()
      
@@ -384,6 +385,7 @@ class gui(QtWidgets.QMainWindow):
         outer_layout.addLayout(top3_layout)
 
         outer_layout.addLayout(plot_layout)
+        outer_layout.addLayout(toolbar2)
         
         # self.setLayout(outer_layout)
         
@@ -403,8 +405,8 @@ class gui(QtWidgets.QMainWindow):
         self.show()
                 
     def exitfunc(self):
-                QtWidgets.QApplication.instance().quit          
-                self.close()    
+        QtWidgets.QApplication.instance().quit          
+        self.close()
     
   ########################      
     def find_regions(self,db_threshold):
@@ -2146,3 +2148,6 @@ def start():
 
     w = gui()
     sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    start()
