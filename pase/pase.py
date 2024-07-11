@@ -1158,7 +1158,7 @@ class gui(QtWidgets.QMainWindow):
                 self.detectiondf.to_csv(savename[0])                
 
     def openfilefunc(self):
-        fname_canidates, ok = QtWidgets.QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()",'',"Audio Files (*.wav *.aif *.aiff *.aifc *.ogg *.flac)")
+        fname_canidates, ok = QtWidgets.QFileDialog.getOpenFileNames(self,"QFileDialog.getOpenFileNames()",'',"Audio Files (*.mp3 *.wav *.aif *.aiff *.aifc *.ogg *.flac)")
         
         # print( fname_canidates)
  
